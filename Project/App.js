@@ -66,7 +66,7 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
             <Stack.Screen name="ListScreen" component={ListScreen} />
-            <Stack.Screen name="List1" component={ListAS1} />
+            <Stack.Screen name="General" component={ListAS1} />
             <Stack.Screen name="List2" component={ListAS2} />
             <Stack.Screen name="List3" component={ListAS3} />
             <Stack.Screen name="List4" component={ListAS4} />

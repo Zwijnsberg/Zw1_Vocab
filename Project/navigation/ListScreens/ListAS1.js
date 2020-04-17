@@ -1,4 +1,5 @@
 import React from 'react';
+import {AsyncStorage} from 'react-native';
 import { Platform, StyleSheet, Text, View, FlatList, Navigator } from 'react-native';
 import Header from '../../components/Header';
 import InputBar from '../../components/InputBar';
@@ -27,6 +28,7 @@ export default class ListAS1 extends React.Component {
     }
 
   }
+  
 
   addNewTodo () {
     let todos = this.state.todos;
@@ -81,11 +83,10 @@ export default class ListAS1 extends React.Component {
           <FlatList
             data={this.state.todos}
             extraData={this.state}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item, index}) => {
+            keyExtractor={(index) => index.toString()}
+            renderItem={({item}) => {
               return (
                 <TodoItem todoItem={item} toggleDone={() => this.toggleDone(item)} removeTodo={() => this.removeTodo(item)} />
-                
               )
             }}
           />

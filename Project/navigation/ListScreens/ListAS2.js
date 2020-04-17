@@ -1,9 +1,10 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View, FlatList, Navigator } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, Button, View, FlatList, Navigator, AsyncStorage } from 'react-native';
 import Header from '../../components/Header';
 import InputBar from '../../components/InputBar';
 import TodoItem from '../../components/TodoItem';
 import 'react-native-gesture-handler';
+import GradientButton from 'react-native-gradient-buttons';
 
 export default class ListAS2 extends React.Component {
   constructor () {
@@ -16,8 +17,10 @@ export default class ListAS2 extends React.Component {
       ]
     }
 
+
     this.state = {
       todoInput: '',
+      textje: "TEXT",
       todos: [
       ]
     }
@@ -61,12 +64,27 @@ export default class ListAS2 extends React.Component {
     this.setState({todos});
   }
 
+  _storeData = async () => {
+      AsyncStorage.setItem('@Name:key', 'I like to save it.').then(() => 
+        console.log('Saved selection to disk')
+        .catch((error) => console.log('AsyncStorage error: ' + error.message)).done())  
+  };
+
+  _retrieveData = async () => {
+    AsyncStorage.setItem('Name').then((value) => 
+        { if (value!==null) {
+            "bruh its fucked."
+        }})
+        .catch((error) => console.log('AsyncStorage error: ' + error.message)).done()
+  };
+
+
   render() {
     const statusbar = (Platform.OS == 'ios') ? <View style={styles.statusbar}></View> : <View></View>;
       return (
 
           <View style={styles.container}>
-
+        
           <InputBar
             addNewTodo={() => this.addNewTodo()}
             textChange={todoInput => this.setState({ todoInput })}
@@ -102,3 +120,40 @@ const styles = StyleSheet.create({
     height: 40
   }
 });
+
+          /*
+          <View style={{marginVertical: 24, alignItems: 'center'}}>
+
+          <GradientButton
+            text= {this.state.textje}
+            textSyle={{ fontSize: 120, color: "#FFFFFF"}}
+            textColor="#FFFFFF"    
+            style={{ marginVertical: 0 }}  
+            gradientBegin= {this.state.butt1Color}
+            gradientEnd= {this.state.butt1ColorE}                            //{this.state.butt1Color}
+            gradientDirection="diagonal"
+            height={150}
+            width={190}
+            radius={15}
+            impact
+            impactStyle='Heavy'
+            onPressAction = {() => { alert("fuck me")}}
+            />
+
+          <GradientButton
+            text= {this.state.textje}
+            textSyle={{ fontSize: 120, color: "#FFFFFF"}}
+            textColor="#FFFFFF"    
+            style={{ marginVertical: 0 }}  
+            gradientBegin= {this.state.butt1Color}
+            gradientEnd= {this.state.butt1ColorE}                            //{this.state.butt1Color}
+            gradientDirection="diagonal"
+            height={150}
+            width={190}
+            radius={15}
+            impact
+            impactStyle='Heavy'
+            onPressAction = {() => {this.setState({textje: "new text bitch"})}}   //{this.setState({textje: this._retrieveData()})}}  
+            />
+
+          </View> */

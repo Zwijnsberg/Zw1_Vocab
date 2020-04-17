@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Array, Button, Alert, TextInput, StyleSheet, AlertIOS, FlatList, List, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Array, Button, Alert, TextInput, StyleSheet, AlertIOS, FlatList, List, Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import GradientButton from 'react-native-gradient-buttons';
 
@@ -49,23 +49,19 @@ export default class HomeScreen extends React.Component {
           ] */
 
       this.state = {
-      buttColor: "#1C04EC" , buttColorE: "#00E18F" ,  butt1Color: "#DAD7D7", butt1ColorE: "#DAD7D7", butt2Color: "#fff", butt2ColorE: "#fff", butt3Color: "#fff", butt3ColorE: "#fff",
-      butt4Color: "#09D2CF",  butt5Color: "#D2B409", butt6Color: "#1809D2", butt7Color: "#09D252", butt8Color: "#D25809", butt9Color: "#C009D2", title0: "General", title1: "+", title2: "+", title3: "+",
+      buttColor: "#4619FE" , buttColorE: "#00E18F" ,  butt1Color: "#DAD7D7", butt1ColorE: "#DAD7D7", butt2Color: "#fff", butt2ColorE: "#fff", 
+      butt3Color: "#fff", butt3ColorE: "#fff",butt4Color: "#09D2CF",  butt5Color: "#D2B409", butt6Color: "#1809D2", butt7Color: "#09D252",
+      title0: "General", title1: "+", title2: "+", title3: "+",
+      boo1: "true", boo2: "true", boo3: "true"
       }
+
   }
-
-
-  _handleTextChange = event => {
-    this.setState({title1: event.nativeEvent.text})
-  }
-
 
 
   onButtonPress = () => {
-      this.setState({ butt1Color: "#00A25B"  });
+      this.setState({ butt1Color: "#00A35E"  });
       this.setState({ butt1ColorE: "#DCFF4D" });
       this.onGray();
-      //this.setState.xx({xx: false})
       this.setState.yy = 2;
   }
 
@@ -91,7 +87,7 @@ export default class HomeScreen extends React.Component {
   onColor2 = () => { 
     
     this.setState({ butt3Color: "#FFEEBD"});
-    this.setState({ butt3ColorE: "#9300FF"});
+    this.setState({ butt3ColorE: "#5803F6"});
 } 
 
   listTitle0 = (text) => { 
@@ -116,6 +112,7 @@ export default class HomeScreen extends React.Component {
 
   button1Press = (text) => {
     this.setState({title1: text});
+    AsyncStorage.setItem( 'listTitle1' , text)
     this.onButtonPress();
   }
 
@@ -128,6 +125,49 @@ export default class HomeScreen extends React.Component {
     this.setState({title3: text});
     this.onColor2();
   }
+
+
+  alertFunction = (text) => {
+                                  if(this.state.boo1 === "true")
+                                  {
+                                    Alert.prompt( null, null, [ {
+                                                                  text: "Cancel",
+                                                                  onPress: () => console.log("Cancel Pressed"),
+                                                                  style: "cancel"
+                                                                },
+                                        { text: "OK", onPress: (text) => this.button1Press(text) },],);
+                                    this.setState({boo1: "false"})
+                                  }
+                                  else
+                                    this.props.navigation.navigate(text);}
+  
+  alertFunction2 = (text) => {
+                                  if(this.state.boo2 === "true"  && this.state.boo1 === "false")
+                                  {
+                                    Alert.prompt( null, null, [ {
+                                                                  text: "Cancel",
+                                                                  onPress: () => console.log("Cancel Pressed"),
+                                                                  style: "cancel"
+                                                                },
+                                        { text: "OK", onPress: (text) => this.button2Press(text) },],);
+                                    this.setState({boo2: "false"})
+                                  }
+                                  else if (this.state.boo2 === "false")
+                                    this.props.navigation.navigate(text); }
+    
+  alertFunction3 = (text) => {
+                                  if(this.state.boo3 === "true"  && this.state.boo2 === "false" && this.state.boo1 === "false")
+                                  {
+                                    Alert.prompt( null, null, [ {
+                                                                  text: "Cancel",
+                                                                  onPress: () => console.log("Cancel Pressed"),
+                                                                  style: "cancel"
+                                                                },
+                                        { text: "OK", onPress: (text) => this.button3Press(text) },],);
+                                    this.setState({boo3: "false"})
+                                  }
+                                  else if (this.state.boo3 === "false")
+                                    this.props.navigation.navigate(text);}
 
 
   render(){
@@ -150,7 +190,7 @@ export default class HomeScreen extends React.Component {
         radius={15}
         impact
         impactStyle='Light'
-        onPressAction={() => navigation.navigate('List1')}
+        onPressAction={() => navigation.navigate('General')}
       />
 
       <GradientButton
@@ -166,18 +206,7 @@ export default class HomeScreen extends React.Component {
             radius={15}
             impact
             impactStyle='Heavy'
-            onPressAction = {() => { Alert.prompt(
-                                                  null,
-                                                  null,
-                                                  [
-                                                    {
-                                                      text: "Cancel",
-                                                      onPress: () => console.log("Cancel Pressed"),
-                                                      style: "cancel"
-                                                    },
-                                                    { text: "OK", onPress: (text) => this.button1Press(text) },
-                                                  ],
-                                                );}}
+            onPressAction = {() => { this.alertFunction('List2')}}
 
             />
   </View>
@@ -196,18 +225,7 @@ export default class HomeScreen extends React.Component {
       radius={15}
       impact
       impactStyle='Light'
-      onPressAction = {() => { Alert.prompt(
-                                            null,
-                                            null,
-                                            [
-                                              {
-                                                text: "Cancel",
-                                                onPress: () => console.log("Cancel Pressed"),
-                                                style: "cancel"
-                                              },
-                                              { text: "OK", onPress: (text) => this.button2Press(text) },
-                                            ],
-                                          );}}
+      onPressAction = {() => { this.alertFunction2('List3')}}
       />
 
     <GradientButton
@@ -222,20 +240,8 @@ export default class HomeScreen extends React.Component {
       radius={15}
       impact
       impactStyle='Light'
-      onPressAction = {() => { Alert.prompt(
-                                            null,
-                                            null,
-                                            [
-                                              {
-                                                text: "Cancel",
-                                                onPress: () => console.log("Cancel Pressed"),
-                                                style: "cancel"
-                                              },
-                                              { text: "OK", onPress: (text) => this.button3Press(text) },
-                                            ],
-                                          );}}
-                                          //onPressAction={() => navigation.navigate('List4')}
-                                          />
+      onPressAction = {() => { this.alertFunction3('List4')}}
+      />
 
   </View>
 
