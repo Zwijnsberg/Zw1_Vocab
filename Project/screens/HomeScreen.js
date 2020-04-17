@@ -130,7 +130,7 @@ export default class HomeScreen extends React.Component {
   alertFunction = (text) => {
                                   if(this.state.boo1 === "true")
                                   {
-                                    Alert.prompt( null, null, [ {
+                                    Alert.prompt( null, "Type your Vocab-list title:", [ {
                                                                   text: "Cancel",
                                                                   onPress: () => console.log("Cancel Pressed"),
                                                                   style: "cancel"
@@ -138,13 +138,13 @@ export default class HomeScreen extends React.Component {
                                         { text: "OK", onPress: (text) => this.button1Press(text) },],);
                                     this.setState({boo1: "false"})
                                   }
-                                  else
+                                  else 
                                     this.props.navigation.navigate(text);}
   
   alertFunction2 = (text) => {
                                   if(this.state.boo2 === "true"  && this.state.boo1 === "false")
                                   {
-                                    Alert.prompt( null, null, [ {
+                                    Alert.prompt( null, "Type your Vocab-list title:", [ {
                                                                   text: "Cancel",
                                                                   onPress: () => console.log("Cancel Pressed"),
                                                                   style: "cancel"
@@ -158,7 +158,7 @@ export default class HomeScreen extends React.Component {
   alertFunction3 = (text) => {
                                   if(this.state.boo3 === "true"  && this.state.boo2 === "false" && this.state.boo1 === "false")
                                   {
-                                    Alert.prompt( null, null, [ {
+                                    Alert.prompt( null, "Type your Vocab-list title:", [ {
                                                                   text: "Cancel",
                                                                   onPress: () => console.log("Cancel Pressed"),
                                                                   style: "cancel"

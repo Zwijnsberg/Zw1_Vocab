@@ -65,13 +65,13 @@ export default class ListAS2 extends React.Component {
   }
 
   _storeData = async () => {
-      AsyncStorage.setItem('@Name:key', 'I like to save it.').then(() => 
+      AsyncStorage.setItem('@Name:key', 'I like to save it.').then(() =>     //<-- async shit
         console.log('Saved selection to disk')
-        .catch((error) => console.log('AsyncStorage error: ' + error.message)).done())  
+        .catch((error) => console.log('AsyncStorage error: ' + error.message)).done())        
   };
 
   _retrieveData = async () => {
-    AsyncStorage.setItem('Name').then((value) => 
+    AsyncStorage.setItem('Name').then((value) =>     //<-- async shit
         { if (value!==null) {
             "bruh its fucked."
         }})
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
             radius={15}
             impact
             impactStyle='Heavy'
-            onPressAction = {() => { alert("fuck me")}}
+            onPressAction = {() => { alert("fuck my life")}} //{ this._storeData}}    //<-- async shit
             />
 
           <GradientButton
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
             radius={15}
             impact
             impactStyle='Heavy'
-            onPressAction = {() => {this.setState({textje: "new text bitch"})}}   //{this.setState({textje: this._retrieveData()})}}  
+            onPressAction = {() => {this.setState({textje: "new text bitch"})}}   //{this.setState({textje: this._retrieveData()})}}  //<-- async shit
             />
 
           </View> */
