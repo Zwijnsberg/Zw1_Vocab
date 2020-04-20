@@ -20,12 +20,15 @@ export default class ListAS1 extends React.Component {
     this.state = {
       todoInput: '',
       todos: [
-        { id: 0, title: 'chubby-turd', done: false }, { id: 1, title: 'hensopper', done: false },
+      ]
+    }
+
+    /*
+    { id: 0, title: 'chubby-turd', done: false }, { id: 1, title: 'hensopper', done: false },
         { id: 2, title: 'febrous', done: false }, { id: 3, title: 'archicembalo', done: false },
         { id: 4, title: 'lekgotla', done: false }, { id: 5, title: 'imbizo', done: false },
         { id: 6, title: 'suffragism', done: false }, { id: 7, title: 'maltipoo', done: false },
-      ]
-    }
+    */
 
   }
   

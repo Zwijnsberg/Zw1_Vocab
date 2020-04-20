@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, TabNavigator, TabBarBottom } from 'react-native';
 import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
@@ -24,7 +24,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           title: 'Lists',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name= "ios-apps"  />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} style={styles.tabBarOptions} name= "ios-apps"  />,
         }}
       />
       <BottomTab.Screen
@@ -80,3 +80,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+/*
+tabBarIcon: ({tintColor}) => <TabBarIcon name= "ios-apps"  color={tintColor} size={25}/>,
+          tabBarOptions: 
+          { activeTintColor: 'tomato',
+          inactiveTintColor: 'gray', },
+*/

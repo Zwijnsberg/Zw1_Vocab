@@ -1,14 +1,18 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, Button, View, FlatList, Navigator, AsyncStorage } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, Button, Image, IconButton, readIcon, bookmarkIcon, title, description, url, urlToImage, View, FlatList, Navigator, AsyncStorage } from 'react-native';
 import Header from '../../components/Header';
 import InputBar from '../../components/InputBar';
 import TodoItem from '../../components/TodoItem';
 import 'react-native-gesture-handler';
 import GradientButton from 'react-native-gradient-buttons';
+import { GestureHandlerRefContext } from '@react-navigation/stack';
+
 
 export default class ListAS2 extends React.Component {
   constructor () {
     super();
+
+    
 
     this.state = {
       todoInput: '',
@@ -20,12 +24,13 @@ export default class ListAS2 extends React.Component {
 
     this.state = {
       todoInput: '',
-      textje: "TEXT",
-      todos: [
-      ]
+      textje: "Testing box for asyncStorage",   //this.displayData,
+      todos: []
     }
 
   }
+
+
 
   addNewTodo () {
     let todos = this.state.todos;
@@ -40,7 +45,9 @@ export default class ListAS2 extends React.Component {
       todos: todos,
       todoInput: ' '
     });
-  }
+
+    // & this.saveList();
+  } 
 
   toggleDone (item) {
     let todos = this.state.todos;
@@ -64,23 +71,32 @@ export default class ListAS2 extends React.Component {
     this.setState({todos});
   }
 
-  _storeData = async () => {
-      AsyncStorage.setItem('@Name:key', 'I like to save it.').then(() =>     //<-- async shit
-        console.log('Saved selection to disk')
-        .catch((error) => console.log('AsyncStorage error: ' + error.message)).done())        
-  };
+  saveList() {
+    let theList = this.state.todos;
+    AsyncStorage.setItem('todos', theList);
+  }
 
-  _retrieveData = async () => {
-    AsyncStorage.setItem('Name').then((value) =>     //<-- async shit
-        { if (value!==null) {
-            "bruh its fucked."
-        }})
-        .catch((error) => console.log('AsyncStorage error: ' + error.message)).done()
-  };
+
+
+  displayData = async(text) => {
+    alert("This text-change shows that we are able to save a value from the previous screen in local storage (the title of the list) by using AsyncStore, now we must find a way to apply this to the list items.")
+    try {
+      let word = await AsyncStorage.getItem(text);
+      this.setState({textje: word});
+    }
+    catch(error) {
+      alert(error);
+    }
+  }
+
+
 
 
   render() {
     const statusbar = (Platform.OS == 'ios') ? <View style={styles.statusbar}></View> : <View></View>;
+
+    // we can put const functions here <------
+
       return (
 
           <View style={styles.container}>
@@ -91,15 +107,31 @@ export default class ListAS2 extends React.Component {
             todoInput={this.state.todoInput}
           />
 
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginVertical: 600}}>
+            <GradientButton
+              text=  {this.state.textje}
+              style={{ marginVertical: 8 }}
+              textSyle={{ fontSize: 20 }}      
+              gradientBegin= "#F3E9FF"
+              gradientEnd= "#F3E9FF"
+              gradientDirection="diagonal"
+              height={120}
+              width={230}
+              radius={15}
+              impact
+              impactStyle='Light'
+              onPressAction={() => {this.displayData('word')}}
+            />
+
+          </View>
 
           <FlatList
-            data={this.state.todos}
+            data= {this.state.todos} // & {this.displayData('todos')}
             extraData={this.state}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => {
               return (
                 <TodoItem todoItem={item} toggleDone={() => this.toggleDone(item)} removeTodo={() => this.removeTodo(item)} />
-                
               )
             }}
           />
@@ -121,39 +153,3 @@ const styles = StyleSheet.create({
   }
 });
 
-          /*
-          <View style={{marginVertical: 24, alignItems: 'center'}}>
-
-          <GradientButton
-            text= {this.state.textje}
-            textSyle={{ fontSize: 120, color: "#FFFFFF"}}
-            textColor="#FFFFFF"    
-            style={{ marginVertical: 0 }}  
-            gradientBegin= {this.state.butt1Color}
-            gradientEnd= {this.state.butt1ColorE}                            //{this.state.butt1Color}
-            gradientDirection="diagonal"
-            height={150}
-            width={190}
-            radius={15}
-            impact
-            impactStyle='Heavy'
-            onPressAction = {() => { alert("fuck my life")}} //{ this._storeData}}    //<-- async shit
-            />
-
-          <GradientButton
-            text= {this.state.textje}
-            textSyle={{ fontSize: 120, color: "#FFFFFF"}}
-            textColor="#FFFFFF"    
-            style={{ marginVertical: 0 }}  
-            gradientBegin= {this.state.butt1Color}
-            gradientEnd= {this.state.butt1ColorE}                            //{this.state.butt1Color}
-            gradientDirection="diagonal"
-            height={150}
-            width={190}
-            radius={15}
-            impact
-            impactStyle='Heavy'
-            onPressAction = {() => {this.setState({textje: "new text bitch"})}}   //{this.setState({textje: this._retrieveData()})}}  //<-- async shit
-            />
-
-          </View> */

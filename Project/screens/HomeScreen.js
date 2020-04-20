@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, Array, Button, Alert, TextInput, StyleSheet, AlertIOS, FlatList, List, Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import GradientButton from 'react-native-gradient-buttons';
+import ListAS2 from '../navigation/ListScreens/ListAS2';
 
 
 //import { useNavigation } from '@react-navigation/native';
@@ -15,44 +16,11 @@ export default class HomeScreen extends React.Component {
   constructor (props) {
     super(props);
 
-        /*
-        this.state = {
-          listInput: '',
-          lists: [
-            { id: 0, title: '', gb: "#FFFFFF", ge: "#FFFFFF"},
-          ]
-        }
-
-        this.state = {
-          buttonColor: "#fff",
-          listInput: '',
-          lists: [
-            { id: 0, title: 'music', gb: "#FFFFFF", ge: "#FFFFFF"},   //... for the meanwhile this isn't used, but it will be usefull if we want to automate the creation of buttons
-            { id: 1, title: 'bruh', gb: "#FFFFFF", ge: "#FFFFFF"},
-            { id: 2, title: "chicken", gb: "#FFFFFF", ge: "#FFFFFF"}, 
-            { id: 3, title: 'chow', gb: "#FFFFFF", ge: "#FFFFFF"},
-          ]
-        }
-
-        this.state = {
-          colorz: [
-            { id: 0, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: true},   //... for the meanwhile this isn't used, but it will be usefull if we want to automate the creation of buttons
-            { id: 1, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-            { id: 2, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false}, 
-            { id: 3, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-            { id: 4, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-            { id: 5, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-            { id: 6, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-            { id: 7, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-            { id: 8, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-            { id: 9, buttColBeg: "#D25809" , buttColorEnd: "#C309D2", active: false},
-          ] */
-
       this.state = {
       buttColor: "#4619FE" , buttColorE: "#00E18F" ,  butt1Color: "#DAD7D7", butt1ColorE: "#DAD7D7", butt2Color: "#fff", butt2ColorE: "#fff", 
       butt3Color: "#fff", butt3ColorE: "#fff",butt4Color: "#09D2CF",  butt5Color: "#D2B409", butt6Color: "#1809D2", butt7Color: "#09D252",
       title0: "General", title1: "+", title2: "+", title3: "+",
-      boo1: "true", boo2: "true", boo3: "true"
+      boo1: "true", boo2: "true", boo3: "true", todos: [],
       }
 
   }
@@ -130,7 +98,7 @@ export default class HomeScreen extends React.Component {
   alertFunction = (text) => {
                                   if(this.state.boo1 === "true")
                                   {
-                                    Alert.prompt( null, "Type your Vocab-list title:", [ {
+                                    Alert.prompt( null, "Type your Vocab list title:", [ {
                                                                   text: "Cancel",
                                                                   onPress: () => console.log("Cancel Pressed"),
                                                                   style: "cancel"
@@ -139,12 +107,14 @@ export default class HomeScreen extends React.Component {
                                     this.setState({boo1: "false"})
                                   }
                                   else 
-                                    this.props.navigation.navigate(text);}
+                                    this.props.navigation.navigate(text);
+                                    this.saveData1(this.state.title1);
+                                  }
   
   alertFunction2 = (text) => {
                                   if(this.state.boo2 === "true"  && this.state.boo1 === "false")
                                   {
-                                    Alert.prompt( null, "Type your Vocab-list title:", [ {
+                                    Alert.prompt( null, "Type your Vocab list title:", [ {
                                                                   text: "Cancel",
                                                                   onPress: () => console.log("Cancel Pressed"),
                                                                   style: "cancel"
@@ -158,7 +128,7 @@ export default class HomeScreen extends React.Component {
   alertFunction3 = (text) => {
                                   if(this.state.boo3 === "true"  && this.state.boo2 === "false" && this.state.boo1 === "false")
                                   {
-                                    Alert.prompt( null, "Type your Vocab-list title:", [ {
+                                    Alert.prompt( null, "Type your Vocab list title:", [ {
                                                                   text: "Cancel",
                                                                   onPress: () => console.log("Cancel Pressed"),
                                                                   style: "cancel"
@@ -168,6 +138,20 @@ export default class HomeScreen extends React.Component {
                                   }
                                   else if (this.state.boo3 === "false")
                                     this.props.navigation.navigate(text);}
+
+
+  /*
+  displayDataA2 = () => {
+    new ListAS2().displayData();
+  }*/
+
+  saveData1(text) {
+    let word = text
+    //let todoz = this.state.todos;
+    AsyncStorage.setItem('word', word);
+    //this.displayDataA2();
+    //AsyncStorage.setItem('todos', todoz);
+  }
 
 
   render(){
@@ -206,7 +190,7 @@ export default class HomeScreen extends React.Component {
             radius={15}
             impact
             impactStyle='Heavy'
-            onPressAction = {() => { this.alertFunction('List2')}}
+            onPressAction = {() => { this.alertFunction('List 2')}}
 
             />
   </View>
@@ -225,7 +209,7 @@ export default class HomeScreen extends React.Component {
       radius={15}
       impact
       impactStyle='Light'
-      onPressAction = {() => { this.alertFunction2('List3')}}
+      onPressAction = {() => { this.alertFunction2('List 3')}}
       />
 
     <GradientButton
@@ -240,7 +224,7 @@ export default class HomeScreen extends React.Component {
       radius={15}
       impact
       impactStyle='Light'
-      onPressAction = {() => { this.alertFunction3('List4')}}
+      onPressAction = {() => { this.alertFunction3('List 4')}}
       />
 
   </View>
